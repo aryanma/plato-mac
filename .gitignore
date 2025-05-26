@@ -1,0 +1,6 @@
+# Ignore large model files and binaries
+vosk/model/*
+!vosk/model/README
+bin/terminal-notifier
+plato-mac
+*.wav 

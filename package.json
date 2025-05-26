@@ -1,0 +1,23 @@
+{
+  "name": "plato",
+  "version": "1.0.0",
+  "description": "AI-powered meeting scheduler for Mac (Electron)",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "axios": "^1.9.0",
+    "googleapis": "^149.0.0",
+    "mic": "^2.1.1",
+    "ws": "^8.18.2",
+    "open": "^9.0.0",
+    "node-notifier": "^10.0.1"
+  },
+  "bin": "index.js",
+  "pkg": {
+    "scripts": "index.js",
+    "targets": ["node18-macos-x64"],
+    "outputPath": "dist"
+  }
+}
