@@ -21,7 +21,6 @@ AI-powered meeting intent detection and Google Calendar integration for your Mac
     vosk/model/conf/
     vosk/model/graph/
     vosk/model/ivector/
-    vosk/model/README
     ```
 
 3. **Place `terminal-notifier` in the correct location:**
