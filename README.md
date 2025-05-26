@@ -2,6 +2,8 @@
 
 AI-powered meeting intent detection and Google Calendar integration for your Mac.
 
+**Easily add meetings to your Google Calendar just by talking!**
+
 ---
 
 ## 🚀 Quick Start
@@ -50,6 +52,11 @@ AI-powered meeting intent detection and Google Calendar integration for your Mac
 
 ---
 
+## 🟢 Step-by-Step Setup Guide
+
+1. **Download the Files**
+   ...
+
 ## 📋 Requirements
 
 - macOS
@@ -91,6 +98,34 @@ AI-powered meeting intent detection and Google Calendar integration for your Mac
 ## 📣 License
 
 MIT
+
+---
+
+## 🔑 How to Get Your Google Credentials (Client ID and Secret)
+
+Most people don't have these yet! Here's how to get them:
+
+1. **Go to the [Google Cloud Console](https://console.cloud.google.com/apis/credentials).**
+2. **Sign in with your Google account.**
+3. **Create a new project** (or select an existing one).
+4. **Enable the Google Calendar API:**
+   - In the left menu, click **"Library"**.
+   - Search for **"Google Calendar API"** and click it.
+   - Click **"Enable"**.
+5. **Create OAuth 2.0 Credentials:**
+   - In the left menu, click **"Credentials"**.
+   - Click **"+ Create Credentials"** and choose **"OAuth client ID"**.
+   - If prompted, configure the consent screen (just fill in the required fields).
+   - For **Application type**, choose **"Desktop app"**.
+   - Name it anything you like (e.g., "Plato App").
+   - Click **"Create"**.
+6. **Copy your Client ID and Client Secret:**
+   - A box will pop up with your **Client ID** and **Client Secret**.
+   - Paste these into your `.env` file as shown above.
+
+**Need more help?**
+- See Google's official guide: [Create OAuth client ID credentials](https://developers.google.com/workspace/guides/create-credentials#oauth-client-id)
+- Or ask a friend or the developer for help!
 
 ---
 
