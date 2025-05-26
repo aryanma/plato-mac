@@ -10,7 +10,7 @@ const { google } = require('googleapis');
 const axios = require('axios');
 const mic = require('mic');
 const WebSocket = require('ws');
-const { spawn } = require('child_process');
+const { spawn, exec } = require('child_process');
 require('dotenv').config();
 const CLIENT_ID = process.env.CLIENT_ID;
 const CLIENT_SECRET = process.env.CLIENT_SECRET;
@@ -21,6 +21,7 @@ const TOKEN_PATH = path.join(os.homedir(), '.plato_gcal_token');
 notifier.options = {
   terminalNotifier: path.join(__dirname, 'bin/terminal-notifier')
 };
+console.log('Terminal notifier path:', path.join(__dirname, 'bin/terminal-notifier'));
 
 // Launch bundled Vosk server
 const voskDir = path.join(__dirname, 'vosk');
@@ -172,6 +173,17 @@ function startVoskClient(onTranscript) {
 
 // --- Main logic ---
 (async () => {
+  // Test notification
+  console.log('Testing notification system...');
+  notifier.notify({
+    title: 'Test Notification',
+    message: 'Testing the notification system on startup',
+    wait: true,
+    timeout: 20
+  }, (err, response, metadata) => {
+    console.log('Test notification callback:', { err, response, metadata });
+  });
+
   // 1. Ensure we have a refresh token
   let oAuth2Client = getOAuth2Client();
   if (!oAuth2Client) {
@@ -189,19 +201,24 @@ function startVoskClient(onTranscript) {
     console.log('Transcript:', transcript);
     const result = await detectIntentWithOllama(transcript);
     console.log('LLM result:', result);
-    if (result.intent === 'schedule_meeting' && result.text && result.text !== lastEventText) {
+    if (result.intent === 'schedule_event' && result.text && result.text !== lastEventText) {
+      console.log('Meeting intent detected, preparing notification...');
       lastEventText = result.text;
+      // Try node-notifier first
       notifier.notify({
-        title: 'Meeting Detected',
+        title: 'PLATO: Meeting Detected!',
         message: result.text || 'A meeting was detected.',
-        wait: true,
-        timeout: 20
+        timeout: 30 // longer timeout, no 'wait'
       }, async (err, response, metadata) => {
-        // On macOS, action buttons are unreliable; treat any click as confirmation
+        console.log('Notification callback triggered:', { err, response, metadata });
+        // If notification was not shown or closed instantly, use osascript as fallback
+        if (metadata && metadata.activationType === 'closed') {
+          console.log('Notification closed instantly, trying osascript fallback...');
+          exec(`osascript -e 'display notification "${result.text || 'A meeting was detected.'}" with title "PLATO: Meeting Detected!"'`);
+        }
         if (err) {
           console.error('Notification error:', err);
         }
-        // For macOS, metadata.activationType === 'contentsClicked' means notification was clicked
         if ((metadata && metadata.activationType === 'contentsClicked') || (metadata && metadata.activationValue === 'Add to GCal')) {
           console.log('Notification clicked, adding event to Google Calendar...');
           try {
@@ -213,7 +230,6 @@ function startVoskClient(onTranscript) {
         } else {
           console.log('Notification dismissed or timed out.');
         }
-        // Reset lastEventText so new meeting requests can trigger notifications
         lastEventText = '';
       });
     }
