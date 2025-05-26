@@ -6,6 +6,13 @@ Easily add meetings to your Google Calendar just by talking!
 
 ## 🚀 Quick Start (For Beginners)
 
+> **Dependencies:** This app uses the following Node.js packages:
+> - `axios`
+> - `googleapis`
+> - `node-notifier`
+> - `ws`
+> - `chrono-node` (for robust natural language date parsing)
+
 ### 1. **Download or Clone the App**
 - Click the green **Code** button on GitHub and choose **Download ZIP**.
 - Unzip the folder to your Desktop.
@@ -84,5 +91,12 @@ Easily add meetings to your Google Calendar just by talking!
 MIT
 
 ---
+
+## 📝 How it Works
+
+- Listens for meeting or event intent in your speech.
+- Uses advanced natural language date parsing (with chrono-node) for accurate scheduling.
+- Notifies you and lets you add events to Google Calendar with one click.
+- Runs in the background—no UI required.
 
 **Enjoy seamless, AI-powered meeting scheduling on your Mac!** 
