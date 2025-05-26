@@ -4,6 +4,18 @@ Easily add meetings to your Google Calendar just by talking!
 
 ---
 
+## 🧰 What You Need to Install (For Beginners)
+
+**Before you start, you will need:**
+- **Node.js** (for running the app)
+- **Python 3** (for speech recognition)
+- **Google credentials** (for calendar access)
+
+**You do NOT need to install any Node.js packages one by one!**
+You will run a single command to install everything automatically.
+
+---
+
 ## 🚀 Quick Start (For Beginners)
 
 > **Dependencies:** This app uses the following Node.js packages:
@@ -25,19 +37,21 @@ Easily add meetings to your Google Calendar just by talking!
 - Go to [python.org/downloads](https://python.org/downloads) and download Python 3 for Mac.
 - Open the downloaded file and follow the instructions to install.
 
-### 4. **Install Node.js Dependencies**
+### 4. **Install Node.js Dependencies (IMPORTANT!)**
 - Open the **Terminal** app (find it in Applications > Utilities).
 - Type the following command and press Enter:
   ```sh
   cd ~/Desktop/plato-mac
   npm install
   ```
+- This will automatically install **all required Node.js packages** (including chrono-node, axios, etc.).
 
 ### 5. **Install Python Dependencies**
 - In the same Terminal window, type:
   ```sh
   pip3 install -r vosk/requirements.txt
   ```
+- This will install all the Python packages needed for speech recognition.
 
 ### 6. **Download the Vosk Model**
 - Download `vosk-model.zip` from the [latest release page](https://github.com/aryanma/plato-mac/releases).
@@ -81,6 +95,15 @@ Easily add meetings to your Google Calendar just by talking!
 
 ---
 
+## 📝 How it Works
+
+- Listens for meeting or event intent in your speech.
+- Uses advanced natural language date parsing (with chrono-node) for accurate scheduling.
+- Notifies you and lets you add events to Google Calendar with one click.
+- Runs in the background—no UI required.
+
+---
+
 ## 🙏 Credits
 - [Vosk Speech Recognition](https://alphacephei.com/vosk/)
 - [Google Calendar API](https://developers.google.com/calendar)
@@ -91,12 +114,5 @@ Easily add meetings to your Google Calendar just by talking!
 MIT
 
 ---
-
-## 📝 How it Works
-
-- Listens for meeting or event intent in your speech.
-- Uses advanced natural language date parsing (with chrono-node) for accurate scheduling.
-- Notifies you and lets you add events to Google Calendar with one click.
-- Runs in the background—no UI required.
 
 **Enjoy seamless, AI-powered meeting scheduling on your Mac!** 
