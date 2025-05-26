@@ -1,107 +1,66 @@
 # Plato Meeting Scheduler for macOS
 
-AI-powered meeting intent detection and Google Calendar integration for your Mac.
-
 **Easily add meetings to your Google Calendar just by talking!**
 
 ---
 
-## 🚀 Quick Start
+## 🟢 Step-by-Step Setup Guide (For Beginners)
 
-1. **Download the latest release assets from [Releases](https://github.com/aryanma/plato-mac/releases):**
-    - `plato-mac` (the main app binary)
-    - `bin/terminal-notifier`
-    - `vosk-model.zip`
+### 1. Download the Files
+- Go to the [Releases page](https://github.com/aryanma/plato-mac/releases).
+- Download these three files:
+  - `plato-mac` (the main app)
+  - `vosk-model.zip`
+  - `terminal-notifier` (inside the `bin` folder)
 
-2. **Unzip the Vosk model:**
-    ```sh
-    unzip vosk-model.zip -d vosk/model/
-    ```
-    After unzipping, your folder structure should look like:
-    ```
-    vosk/model/am/
-    vosk/model/conf/
-    vosk/model/graph/
-    vosk/model/ivector/
-    ```
+### 2. Unzip the Vosk Model
+- Find `vosk-model.zip` in your Downloads folder.
+- Double-click it to unzip. You should get a folder called `vosk-model`.
+- Open the `vosk-model` folder. You should see folders named `am`, `conf`, `graph`, and `ivector`.
 
-3. **Place `terminal-notifier` in the correct location:**
-    - Move `terminal-notifier` into the `bin/` directory in your project root.
-    - If the `bin/` directory does not exist, create it:
-      ```sh
-      mkdir -p bin
-      mv terminal-notifier bin/
-      ```
+### 3. Set Up the App Folder
+- Create a new folder anywhere you like (for example, on your Desktop) and name it `Plato`.
+- Move these files into your new `Plato` folder:
+  - `plato-mac`
+  - The entire unzipped `vosk-model` folder (rename it to just `model`)
+  - The `terminal-notifier` file
+- Your `Plato` folder should look like this:
+  ```
+  Plato/
+    plato-mac
+    bin/
+      terminal-notifier
+    vosk/
+      model/
+        am/
+        conf/
+        graph/
+        ivector/
+        README
+  ```
+  - If you don't have a `bin` folder, create one inside `Plato` and put `terminal-notifier` inside it.
+  - If you don't have a `vosk` folder, create one inside `Plato` and move the `model` folder inside it.
 
-4. **Make the binary executable:**
-    ```sh
-    chmod +x plato-mac
-    ```
+### 4. Make the App and Notifier Executable
+- Open the **Terminal** app (find it in Applications > Utilities > Terminal).
+- Type the following commands, pressing Enter after each one (replace `Desktop/Plato` with the path to your folder if it's somewhere else):
+  ```sh
+  cd ~/Desktop/Plato
+  chmod +x plato-mac
+  chmod +x bin/terminal-notifier
+  ```
 
-5. **Create a `.env` file in the project root with your Google credentials:**
-    ```
-    CLIENT_ID=your-google-client-id
-    CLIENT_SECRET=your-google-client-secret
-    ```
+### 5. Set Up Google Credentials
+- In your `Plato` folder, create a new file called `.env` (yes, the name starts with a dot).
+- Open `.env` with TextEdit or any text editor.
+- Paste in your Google credentials like this:
+  ```
+  CLIENT_ID=your-google-client-id
+  CLIENT_SECRET=your-google-client-secret
+  ```
+- Save the file.
 
-6. **Run the app:**
-    ```sh
-    ./plato-mac
-    ```
-    - On first run, your browser will open for Google login/consent. Approve access.
-
----
-
-## 🟢 Step-by-Step Setup Guide
-
-1. **Download the Files**
-   ...
-
-## 📋 Requirements
-
-- macOS
-- Python 3 (for Vosk server)
-- Google Cloud OAuth credentials (for `.env`)
-
----
-
-## 📝 How it Works
-
-- Listens for meeting or event intent in your speech.
-- Notifies you and lets you add events to Google Calendar with one click.
-- Runs in the background—no UI required.
-
----
-
-## 🛠 Troubleshooting
-
-- **Missing models?**  
-  Double-check that you unzipped `vosk-model.zip` into the correct folder.
-- **Notifications not working?**  
-  Make sure `bin/terminal-notifier` is executable:
-    ```sh
-    chmod +x bin/terminal-notifier
-    ```
-- **Google login not opening?**  
-  Copy the URL from the terminal and open it in your browser.
-
----
-
-## 🙏 Credits
-
-- [Vosk Speech Recognition](https://alphacephei.com/vosk/)
-- [node-notifier](https://github.com/mikaelbr/node-notifier)
-- [Google Calendar API](https://developers.google.com/calendar)
-
----
-
-## 📣 License
-
-MIT
-
----
-
-## 🔑 How to Get Your Google Credentials (Client ID and Secret)
+### 6. How to Get Your Google Credentials (Client ID and Secret)
 
 Most people don't have these yet! Here's how to get them:
 
@@ -127,6 +86,47 @@ Most people don't have these yet! Here's how to get them:
 - See Google's official guide: [Create OAuth client ID credentials](https://developers.google.com/workspace/guides/create-credentials#oauth-client-id)
 - Or ask a friend or the developer for help!
 
+### 7. Run the App
+- In the Terminal (still in your `Plato` folder), type:
+  ```sh
+  ./plato-mac
+  ```
+- The first time you run it, your web browser will open and ask you to log in to Google and give permission.
+- Approve access.
+
+### 8. You're Done!
+- The app will now listen for meeting or event suggestions in your speech and offer to add them to your Google Calendar.
+
 ---
 
-**Enjoy seamless, AI-powered meeting scheduling on your Mac!** 
+## 🛠 Troubleshooting
+
+- **If you see "permission denied" errors:**  
+  Make sure you ran the `chmod +x` commands above.
+- **If you get "file not found" errors:**  
+  Double-check that all files are in the right folders.
+- **If Google login doesn't open:**  
+  Copy the link from the Terminal and paste it into your browser.
+- **If notifications don't work:**  
+  Make sure `bin/terminal-notifier` is executable:
+    ```sh
+    chmod +x bin/terminal-notifier
+    ```
+
+---
+
+## 🙏 Credits
+
+- [Vosk Speech Recognition](https://alphacephei.com/vosk/)
+- [node-notifier](https://github.com/mikaelbr/node-notifier)
+- [Google Calendar API](https://developers.google.com/calendar)
+
+---
+
+## 📣 License
+
+MIT
+
+---
+
+**Enjoy easy, voice-powered meeting scheduling!** 
