@@ -33,8 +33,8 @@ Easily add meetings to your Google Calendar just by talking!
   ```
 
 ### 6. **Download the Vosk Model**
-- Go to [Vosk Models](https://alphacephei.com/vosk/models) and download a small English model (e.g., `vosk-model-small-en-us-0.15.zip`).
-- Unzip the downloaded file.
+- Download `vosk-model.zip` from the [latest release page](https://github.com/aryanma/plato-mac/releases).
+- Unzip `vosk-model.zip`.
 - Move the unzipped folder into the `vosk` folder inside your app, and rename it to `model` (so you have `vosk/model/` with lots of files inside).
 
 ### 7. **Create Your `.env` File**
