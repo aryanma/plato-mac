@@ -36,7 +36,6 @@
         conf/
         graph/
         ivector/
-        README
   ```
   - If you don't have a `bin` folder, create one inside `Plato` and put `terminal-notifier` inside it.
   - If you don't have a `vosk` folder, create one inside `Plato` and move the `model` folder inside it.
