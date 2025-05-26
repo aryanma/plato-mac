@@ -16,6 +16,7 @@ const CLIENT_ID = process.env.CLIENT_ID;
 const CLIENT_SECRET = process.env.CLIENT_SECRET;
 const SCOPES = ['https://www.googleapis.com/auth/calendar.events'];
 const TOKEN_PATH = path.join(os.homedir(), '.plato_gcal_token');
+const chrono = require('chrono-node');
 
 // Use bundled terminal-notifier
 notifier.options = {
@@ -87,7 +88,37 @@ async function addCalendarEvent(eventDetails) {
   const auth = getOAuth2Client();
   if (!auth) throw new Error('No Google refresh token found.');
   const calendar = google.calendar({ version: 'v3', auth });
-  const start = new Date(eventDetails.datetime);
+
+  // Use chrono-node to parse the date from eventDetails.text
+  console.log('Event text for chrono-node:', eventDetails.text);
+  let start = null;
+  let chronoResult = null;
+  try {
+    chronoResult = chrono.parse(eventDetails.text, new Date(), { forwardDate: true });
+    console.log('chrono-node parse result:', JSON.stringify(chronoResult, null, 2));
+    if (chronoResult && chronoResult.length > 0 && chronoResult[0].start) {
+      let chronoDate = chronoResult[0].start.date();
+      // If chrono-node only found a date (implied hour), but LLM datetime has a time, use LLM's time
+      if (
+        chronoResult[0].start.knownValues &&
+        !('hour' in chronoResult[0].start.knownValues) &&
+        eventDetails.datetime
+      ) {
+        const llmDate = new Date(eventDetails.datetime);
+        chronoDate.setHours(llmDate.getHours(), llmDate.getMinutes(), 0, 0);
+        console.log('Used LLM time for chrono-node date:', chronoDate);
+      }
+      start = chronoDate;
+    }
+  } catch (e) {
+    console.error('Chrono-node parsing error:', e);
+  }
+  // Fallback to LLM's datetime if chrono-node fails
+  if (!start && eventDetails.datetime) {
+    console.log('Falling back to LLM datetime:', eventDetails.datetime);
+    start = new Date(eventDetails.datetime);
+  }
+  if (!start) throw new Error('Could not parse date/time from event.');
   const end = new Date(start.getTime() + 60 * 60 * 1000); // default 1 hour
   const event = {
     summary: eventDetails.text || 'Meeting',
